@@ -1,5 +1,6 @@
 import { Jugador } from './jugador.js';
 import { Enemigo } from './enemigo.js';
+import { leerTeclado } from './eventosListener.js';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -17,12 +18,19 @@ planetaTierraImg.src = "./planet.png";
 const jugadorImg = new Image();
 jugadorImg.src = "./nava-galaxian200x200.png";
 
+const disparoImg = new Image();
+disparoImg.src = "./blaster-2.png";
+
 const enemigosImg = new Image();
-enemigosImg.src = "./anima-enemigosGalaxian.png";
+enemigosImg.src = "./anima-enemigosGalaxian2.png";
+
+//  AUDIO
+const sonidoDisparo = new Audio("./audio/disparo_corto.mp3");
 
 //  OBJETOS
 let jugador;
-let enemigos = [];
+let arrayDisparos = [];
+let arrayEnemigos = [];
 
 let formacion =
 {
@@ -38,15 +46,17 @@ window.onload = function()
     canvas.width = ANCHO_PANTALLA;
     canvas.height = ALTO_PANTALLA;
 
-    jugador = new Jugador(ctx, jugadorImg, ANCHO_PANTALLA, ALTO_PANTALLA);
+    jugador = new Jugador(ctx, jugadorImg, disparoImg, arrayDisparos, ANCHO_PANTALLA, ALTO_PANTALLA);
 
     for (let y = 0; y < 4; y ++)
     {
         for (let x = 0; x < 8; x ++)
         {
-            enemigos.push(new Enemigo(ctx, enemigosImg, x, y));
+            arrayEnemigos.push(new Enemigo(ctx, enemigosImg, x, y));
         }
     }
+
+    console.log(arrayEnemigos);
 
     buclePrincipal();
 }
@@ -64,13 +74,20 @@ function buclePrincipal()
 
     jugador.dibuja();
 
+    arrayDisparos.forEach(disp =>
+    {
+        disp.dibuja();
+    });
+
     formacion.x += formacion.direccion;
 
     if (formacion.x > 100 && formacion.direccion > 0) formacion.direccion *= -1;
     if (formacion.x < -60 && formacion.direccion < 0) formacion.direccion *= -1;
 
-    enemigos.forEach(ene =>
+    arrayEnemigos.forEach(ene =>
     {
         ene.dibuja(formacion.x);
     });
 }
+
+export { jugador, sonidoDisparo };
