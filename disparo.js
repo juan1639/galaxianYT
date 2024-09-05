@@ -23,7 +23,11 @@ export class Disparo
     {
         this.actualiza();
 
+        this.ctx.save();
+        this.ctx.filter = 'blur(2px)';
+
         this.ctx.drawImage(this.imagen, this.x, this.y, this.ancho, this.alto);
+        this.ctx.restore();
     }
 
     actualiza()
