@@ -11,7 +11,7 @@ export class Jugador
         this.ancho = 50;
         this.alto = 80;
 
-        this.velX = 12;
+        this.velX = 18;
 
         this.x = anchoPantalla / 2;
         this.y = altoPantalla - this.alto;

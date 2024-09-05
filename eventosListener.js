@@ -2,6 +2,7 @@ import { jugador, sonidoDisparo } from './main.js';
 
 export const leerTeclado = document.addEventListener('keydown', (e) =>
 {
+    console.log(e);
     console.log(e.key);
 
     if (e.key === 'ArrowLeft')
