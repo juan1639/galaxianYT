@@ -15,6 +15,8 @@ export class Enemigo
         this.x = this.marginX + x * (this.ancho + this.gap);
         this.y = this.marginY + y * (this.alto + this.gap);
 
+        this.alive = true;
+
         this.frame = 0;
         
         this.intervalo = setInterval(() =>
@@ -26,14 +28,20 @@ export class Enemigo
 
     dibuja(formacionX)
     {
+        this.actualiza(formacionX);
+
         const clipX = Math.floor(this.ssheet.width / 3);
 
-        this.ctx.drawImage(this.ssheet,
-            this.frame * clipX, 0, clipX, this.ssheet.height,
-            this.x + formacionX, this.y, this.ancho, this.alto);
+        if (this.alive)
+        {
+            this.ctx.drawImage(this.ssheet,
+                this.frame * clipX, 0, clipX, this.ssheet.height,
+                this.xForm, this.y, this.ancho, this.alto);
+        }
     }
 
-    actualiza()
+    actualiza(formacionX)
     {
+        this.xForm = this.x + formacionX;
     }
 }

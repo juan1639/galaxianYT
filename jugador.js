@@ -17,6 +17,9 @@ export class Jugador
         this.y = altoPantalla - this.alto;
 
         this.arrayDisparos = arrayDisparos;
+
+        this.anchoPantalla = anchoPantalla;
+        this.altoPantalla = altoPantalla;
         
         console.log(this);
     }
@@ -37,10 +40,20 @@ export class Jugador
     izquierda()
     {
         this.x -= this.velX;
+
+        if (this.x <= 0)
+        {
+            this.x = 0;
+        }
     }
 
     derecha()
     {
         this.x += this.velX;
+
+        if (this.x + this.ancho >= this.anchoPantalla)
+        {
+            this.x = this.anchoPantalla - this.ancho;
+        }
     }
 }
