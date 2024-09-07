@@ -12,6 +12,7 @@ export class Jugador
         this.alto = 80;
 
         this.velX = 18;
+        this.moverse = 0;
 
         this.x = anchoPantalla / 2;
         this.y = altoPantalla - this.alto;
@@ -26,6 +27,8 @@ export class Jugador
 
     dibuja()
     {
+        this.movimientoNave();
+
         this.ctx.drawImage(this.imagen, this.x, this.y, this.ancho, this.alto);
     }
 
@@ -37,21 +40,22 @@ export class Jugador
         console.log(this.arrayDisparos);
     }
 
-    izquierda()
+    actualiza(moverse)
     {
-        this.x -= this.velX;
+        this.moverse = moverse;
+    }
 
-        if (this.x <= 0)
+    movimientoNave()
+    {
+        //  moverse = 0 (quieto) / 1 = (derecha) / -1 = (izquierda)
+        this.x += this.velX * this.moverse;
+
+        if (this.x <= 0 && this.moverse < 0)
         {
             this.x = 0;
         }
-    }
 
-    derecha()
-    {
-        this.x += this.velX;
-
-        if (this.x + this.ancho >= this.anchoPantalla)
+        if (this.x + this.ancho >= this.anchoPantalla && this.moverse > 0)
         {
             this.x = this.anchoPantalla - this.ancho;
         }

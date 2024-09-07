@@ -1,6 +1,7 @@
 import { Jugador } from './jugador.js';
 import { Enemigo } from './enemigo.js';
-import { leerTeclado } from './eventosListener.js';
+import { Explosiones } from './explosiones.js';
+import { leerTeclado, leerTecladoSoltarTecla} from './eventosListener.js';
 import { checkColisiones } from './funciones.js';
 
 const canvas = document.getElementById('canvas');
@@ -27,11 +28,13 @@ enemigosImg.src = "./anima-enemigosGalaxian2.png";
 
 //  AUDIO
 const sonidoDisparo = new Audio("./audio/disparo_corto.mp3");
+const sonidoExplosion = new Audio("./audio/explosion.wav");
 
 //  OBJETOS
 let jugador;
 let arrayDisparos = [];
 let arrayEnemigos = [];
+let explosion;
 
 let formacion =
 {
@@ -39,9 +42,10 @@ let formacion =
     x: 0,
 };
 
-// ========================================================
+// ====================================================================
 //  FUNCION INICIALIZADORA
-// --------------------------------------------------------
+//  
+// --------------------------------------------------------------------
 window.onload = function()
 {
     canvas.width = ANCHO_PANTALLA;
@@ -62,7 +66,10 @@ window.onload = function()
     buclePrincipal();
 }
 
+// ===================================================================
 //  BUCLE PRINCIPAL (LOOP)
+//  
+// -------------------------------------------------------------------
 function buclePrincipal()
 {
     window.requestAnimationFrame(buclePrincipal);
@@ -98,10 +105,15 @@ function buclePrincipal()
                     console.log('colision ' + index);
                     ene.alive = false;
                     arrayDisparos.splice(i, 1);
+
+                    explosion = new Explosiones(ctx, 40, ene.xForm, ene.y);
+                    sonidoExplosion.play();
                 }
             }
         });
     });
+
+    if (explosion) explosion.dibuja(); 
 }
 
 export { jugador, sonidoDisparo };
