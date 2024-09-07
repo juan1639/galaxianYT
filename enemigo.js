@@ -1,3 +1,4 @@
+
 export class Enemigo
 {
     constructor(ctx, ssheet, x, y)

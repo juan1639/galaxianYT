@@ -1,6 +1,7 @@
 import { Jugador } from './jugador.js';
 import { Enemigo } from './enemigo.js';
 import { Explosiones } from './explosiones.js';
+import { Explosiones2 } from './explosiones-2.js';
 import { leerTeclado, leerTecladoSoltarTecla} from './eventosListener.js';
 import { checkColisiones } from './funciones.js';
 
@@ -26,6 +27,9 @@ disparoImg.src = "./blaster-2.png";
 const enemigosImg = new Image();
 enemigosImg.src = "./anima-enemigosGalaxian2.png";
 
+const explosionesImg = new Image();
+explosionesImg.src = "./explosion-ssheet.png";
+
 //  AUDIO
 const sonidoDisparo = new Audio("./audio/disparo_corto.mp3");
 const sonidoExplosion = new Audio("./audio/explosion.wav");
@@ -35,6 +39,7 @@ let jugador;
 let arrayDisparos = [];
 let arrayEnemigos = [];
 let explosion;
+let explosion_2;
 
 let formacion =
 {
@@ -107,13 +112,15 @@ function buclePrincipal()
                     arrayDisparos.splice(i, 1);
 
                     explosion = new Explosiones(ctx, 40, ene.xForm, ene.y);
+                    explosion_2 = new Explosiones2(ctx, explosionesImg, ene.xForm, ene.y);
                     sonidoExplosion.play();
                 }
             }
         });
     });
 
-    if (explosion) explosion.dibuja(); 
+    if (explosion_2) explosion_2.dibuja();
+    if (explosion) explosion.dibuja();
 }
 
 export { jugador, sonidoDisparo };
