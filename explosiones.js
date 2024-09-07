@@ -5,6 +5,8 @@ export class Explosiones
     {
         this.ctx = ctx;
 
+        this.duracion = 50;
+
         this.nroFragmentos = nroFragmentos;
         this.xOrigen = xOrigen;
         this.yOrigen = yOrigen;
@@ -15,7 +17,7 @@ export class Explosiones
 
     creaFragmentos(nroFragmentos, xOrigen, yOrigen)
     {
-        let arrayColores = ['red', 'red', 'orangered', 'yellowgreen', 'lighgreen', 'lightyellow', 'yellow'];
+        let arrayColores = ['red', 'red', 'orangered', 'yellowgreen', 'lightgreen', 'lightyellow', 'yellow'];
         let fragmento;
         this.totalFragmentos = [];
 
@@ -39,15 +41,19 @@ export class Explosiones
 
     dibuja()
     {
-        this.totalFragmentos.forEach(frag =>
+        this.duracion --;
+
+        if (this.duracion > 0)
         {
-            frag.x += Math.cos(frag.angulo) * frag.vel;
-            frag.y += Math.sin(frag.angulo) * frag.vel;
-
-            this.ctx.fillStyle = frag.color;
-            this.ctx.fillRect(frag.x, frag.y, frag.size, frag.size);
-        });
-
+            this.totalFragmentos.forEach(frag =>
+            {
+                frag.x += Math.cos(frag.angulo) * frag.vel;
+                frag.y += Math.sin(frag.angulo) * frag.vel;
+    
+                this.ctx.fillStyle = frag.color;
+                this.ctx.fillRect(frag.x, frag.y, frag.size, frag.size);
+            });
+        }
     }
 }
 
