@@ -30,6 +30,9 @@ enemigosImg.src = "./anima-enemigosGalaxian2.png";
 const explosionesImg = new Image();
 explosionesImg.src = "./explosion-ssheet.png";
 
+const disparoEnemigosImg = new Image();
+disparoEnemigosImg.src = "./disparo-ene-ssheet.png";
+
 //  AUDIO
 const sonidoDisparo = new Audio("./audio/disparo_corto.mp3");
 const sonidoExplosion = new Audio("./audio/explosion.wav");
@@ -40,6 +43,7 @@ let arrayDisparos = [];
 let arrayEnemigos = [];
 let explosion;
 let explosion_2;
+let arrayDisparosEnemigos = new Array(32).fill(0);// 32 (8 filas x 4 columnas)
 
 let formacion =
 {
@@ -58,11 +62,14 @@ window.onload = function()
 
     jugador = new Jugador(ctx, jugadorImg, disparoImg, arrayDisparos, ANCHO_PANTALLA, ALTO_PANTALLA);
 
+    let id = 0;
+
     for (let y = 0; y < 4; y ++)
     {
         for (let x = 0; x < 8; x ++)
         {
-            arrayEnemigos.push(new Enemigo(ctx, enemigosImg, x, y));
+            arrayEnemigos.push(new Enemigo(ctx, enemigosImg, x, y, id, arrayDisparosEnemigos, disparoEnemigosImg));
+            id ++;
         }
     }
 
@@ -90,6 +97,11 @@ function buclePrincipal()
     arrayDisparos.forEach(disp =>
     {
         disp.dibuja();
+    });
+
+    arrayDisparosEnemigos.forEach(disp =>
+    {
+        if (disp.activo) disp.dibuja();
     });
 
     formacion.x += formacion.direccion;
